@@ -6,12 +6,12 @@ from datetime import date
 from datetime import datetime
 import re
 
-el_diario = pd.read_csv("el_diario.csv")
+el_diario = pd.read_csv("el_diario/data/el_diario.csv")
 el_diario.drop("Unnamed: 0",axis=1,inplace=True)
-el_diario.to_csv("bups/el_diario_links_bup.csv")
+el_diario.to_csv("el_diario/data/bups/el_diario_links_bup.csv")
 old_links = el_diario.url.to_list()
 
-new_links = pd.DataFrame(columns=["seccion","titulo","url","cmp","idx","dominio"])
+new_links = pd.DataFrame(columns=["seccion","titulo","url","cmp","idx","dominio","crawl_day"])
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
@@ -43,9 +43,8 @@ for i in tags:
     titulo = i.text
     seccion = i.a["href"].split("/")[1]
     
-
-    l.append([seccion,titulo,link,cmp,idx,dominio])
-    df_ = pd.DataFrame(l,columns=["seccion","titulo","url","cmp","idx","dominio"])
+    l.append([seccion,titulo,link,cmp,idx,dominio,date.today()])
+    df_ = pd.DataFrame(l,columns=["seccion","titulo","url","cmp","idx","dominio","crawl_day"])
     new_links = pd.concat([new_links,df_],axis=0)
 
 new_links = new_links[new_links["dominio"] == "www.eldiario.es"]
@@ -56,9 +55,11 @@ for col,row in new_links.iterrows():
         new_links.drop(col,inplace=True)
 
 el_diario = pd.concat([el_diario,new_links],axis=0)
-el_diario.to_csv("el_diario.csv")
+el_diario.reset_index(inplace=True,drop=True)
+el_diario.to_csv("el_diario/data/el_diario.csv")
+print("{0} new links will be parsed".format(len(new_links)))
 
-df_full = pd.DataFrame(columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text"])
+df_full = pd.DataFrame(columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text","crawl_day"])
 
 for col,row in new_links.iterrows():
     l=[]
@@ -69,7 +70,10 @@ for col,row in new_links.iterrows():
     if not "ultima-hora" in url.split("/")[4]:
 
         d = soup.find("time",{"class": "date"})
-        date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
+        try:
+            date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
+        except ValueError:
+            date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+01:00').date()
 
         title = soup.find("h1",{"class": "title"})
         title = title.text.replace("\n"," ")
@@ -105,11 +109,16 @@ for col,row in new_links.iterrows():
         text = text.replace("\n"," ")
         text = re.sub(' +', ' ', text)
         
-        l.append([row["url"],row["seccion"],row["cmp"],row["idx"], date, title, sub, sub_2, author, text])
-        df_ = pd.DataFrame(l,columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text"])
+        l.append([row["url"],row["seccion"],row["cmp"],row["idx"], date, title, sub, sub_2, author, text,date.today()])
+        df_ = pd.DataFrame(l,columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text","crawl_day"])
         df_full = pd.concat([df_full,df_], axis=0)
 
-df_el_diario = pd.read_csv("el_diario_full.csv")
-df_el_diario.to_csv("bups/el_diario_full_{0}.csv".format(date.today()))
+
+df_el_diario = pd.read_csv("el_diario/data/el_diario_full.csv")
+df_el_diario.drop("Unnamed: 0",axis=1,inplace=True)
+df_el_diario.reset_index(inplace=True,drop=True)
+df_el_diario.to_csv("el_diario/data/bups/el_diario_full_bup.csv")
+
 df_el_diario = pd.concat([df_el_diario,df_full],axis=0)
-df_el_diario.to_csv("el_diario_full.csv")
+df_el_diario.reset_index(inplace=True,drop=True)
+df_el_diario.to_csv("el_diario/data/el_diario_full.csv")
