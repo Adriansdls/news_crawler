@@ -16,7 +16,7 @@ new_links = pd.DataFrame(columns=["pos","url","crawl_day"])
 
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
-driver = webdriver.Chrome(chrome_options=options)
+driver = webdriver.Chrome(options=options)
 
 url = "https://www.eldebate.com/"
 driver.get(url)
@@ -27,21 +27,24 @@ soup = BeautifulSoup(page_source, "html.parser") #lxml to be solved
 
 articles = soup.find_all("article")
 
-try:
-    for n,article in enumerate(articles):
-        l = []
-        for a in article.findAll("a"):
-            try:
-                href = "https://www.eldebate.com{0}".format(a["href"])
-            except KeyError:
-                pass
-        pos = n
+for n,article in enumerate(articles):
+    l = []  
+    for a in article.findAll("a"):
+        try:
+            if a["href"].startswith("http"):
+                href = a["href"]
+            else:
+                try:
+                    href = "https://www.eldebate.com{0}".format(a["href"])
+                except KeyError:
+                    continue
+        except KeyError:
+            continue
+    pos = n
 
-        l.append([pos,href,date.today()])
-        df_ = pd.DataFrame(l,columns=["pos","url","crawl_day"])
-        new_links = pd.concat([new_links,df_],axis=0)
-except:
-    pass
+    l.append([pos,href,date.today()])
+    df_ = pd.DataFrame(l,columns=["pos","url","crawl_day"])
+    new_links = pd.concat([new_links,df_],axis=0)
 
 new_links.drop_duplicates(inplace=True)
 new_links.reset_index(inplace=True,drop=True)
@@ -61,51 +64,54 @@ df_full = pd.DataFrame(columns=["tags","tag","keywords","url","seccion","pos","d
 for col,row in new_links.iterrows():
     l=[]
     url = row["url"]
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
+    if url.split("/")[3] != "autor":
+        response = requests.get(url)
+        soup = BeautifulSoup(response.text, "html.parser")
 
-    head = soup.find("head")
-    seccion = soup.find("meta",property="article:section")
-    title = soup.find("meta",property="og:title")
-    title = title["content"]
-    seccion = seccion["content"]
+        head = soup.find("head")
+        seccion = soup.find("meta",property="article:section")
+        title = soup.find("meta",property="og:title")
+        title = title["content"]
+        seccion = seccion["content"]
 
-    for i in head.find_all("meta"):
+        for i in head.find_all("meta"):
+            try:
+                if i["name"] == "date":
+                    fecha = i["content"]
+                elif i["name"] == "Keywords":
+                    keywords = i["content"]
+                elif i["name"] == "author":
+                    author = i["content"]
+                elif i["name"] == "article:tag":
+                    tag = i["content"]
+            
+            except KeyError:
+                pass
+
         try:
-            if i["name"] == "date":
-                fecha = i["content"]
-            elif i["name"] == "Keywords":
-                keywords = i["content"]
-            elif i["name"] == "author":
-                author = i["content"]
-            elif i["name"] == "article:tag":
-                tag = i["content"]
-        
-        except KeyError:
-            pass
-
-    try:
-        sub = soup.find("div",class_="c-detail__subtitle").text
-    except AttributeError:
-        try:
-            sub = soup.find("h2",class_="c-detail__subtitle").find("h2").text
+            sub = soup.find("div",class_="c-detail__subtitle").text
         except AttributeError:
-            sub = "Nan"
+            try:
+                sub = soup.find("h2",class_="c-detail__subtitle").find("h2").text
+            except AttributeError:
+                sub = "Nan"
+        
+        text = []
+        x = soup.find_all("div",class_="paragraph")
+        for i in x:
+            text.append(i.text)
+        text = " ".join(text)
+        
+        temas = []
+        x = soup.find_all("li",class_="c-detail__tags__item")
+        for i in x:
+            temas.append(i.text.replace("\n",""))
     
-    text = []
-    x = soup.find_all("div",class_="paragraph")
-    for i in x:
-        text.append(i.text)
-    text = " ".join(text)
-    
-    temas = []
-    x = soup.find_all("li",class_="c-detail__tags__item")
-    for i in x:
-        temas.append(i.text.replace("\n",""))
-    
-    l.append([temas,tag,keywords,row["url"],seccion,row["pos"], fecha, title, sub, author, text,date.today()])
-    df_ = pd.DataFrame(l,columns=["tags","tag","keywords","url","seccion","pos","date","title","sub","author","text","crawl_day"])
-    df_full = pd.concat([df_full,df_], axis=0)
+        l.append([temas,tag,keywords,row["url"],seccion,row["pos"], fecha, title, sub, author, text,date.today()])
+        df_ = pd.DataFrame(l,columns=["tags","tag","keywords","url","seccion","pos","date","title","sub","author","text","crawl_day"])
+        df_full = pd.concat([df_full,df_], axis=0)
+    else:
+        pass
 
 df_full.url.drop_duplicates(inplace=True)
 
