@@ -1,4 +1,8 @@
 import pandas as pd
+from datetime import datetime
+
+now = datetime.now()
+current_time = now.strftime("%d.%m.%Y %H:%M:%S")
 
 t = pd.read_csv("all_together.csv")
 t.to_csv("all_together_bup.csv")
@@ -25,4 +29,4 @@ tods.reset_index(drop=True,inplace=True)
 
 tods.to_csv("all_together.csv")
 
-print("{0} new links were added".format((len(tods) - len(t))))
+print("{0} - {1} new links were added".format(current_time, (len(tods) - len(t))))

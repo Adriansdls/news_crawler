@@ -2,10 +2,16 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from datetime import date
 from datetime import datetime
 import re
 from pandas.errors import ParserError
+
+from datetime import datetime
+
+now = datetime.now()
+current_time = now.strftime("%d.%m.%Y %H:%M:%S")
 
 el_debate = pd.read_csv("data/el_debate.csv")
 el_debate.drop("Unnamed: 0",axis=1,inplace=True)
@@ -14,9 +20,11 @@ old_links = el_debate.url.to_list()
 
 new_links = pd.DataFrame(columns=["pos","url","crawl_day"])
 
+path = "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/chromedriver"
+s = Service(path)
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
-driver = webdriver.Chrome(options=options)
+driver = webdriver.Chrome(service=s,options=options)
 
 url = "https://www.eldebate.com/"
 driver.get(url)
@@ -57,7 +65,7 @@ el_debate = pd.concat([el_debate,new_links],axis=0)
 el_debate.drop_duplicates(inplace=True)
 el_debate.reset_index(inplace=True,drop=True)
 
-print("{0} new links will be parsed".format(len(new_links)))
+print("{0} - {1} new links will be parsed".format(current_time, len(new_links)))
 
 df_full = pd.DataFrame(columns=["tags","tag","keywords","url","seccion","pos","date","title","sub","author","text","crawl_day"])
 
@@ -115,13 +123,13 @@ for col,row in new_links.iterrows():
 
 df_full.url.drop_duplicates(inplace=True)
 
-df_el_debate = pd.read_csv("data/el_debate_full.csv")
+df_el_debate = pd.read_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_debate_full.csv")
 df_el_debate.drop("Unnamed: 0",axis=1,inplace=True)
 df_el_debate.reset_index(inplace=True,drop=True)
 df_el_debate.to_csv("data/bups/el_debate_full_bup.csv")
 
 df_el_debate = pd.concat([df_el_debate,df_full],axis=0)
 df_el_debate.reset_index(inplace=True,drop=True)
-df_el_debate.to_csv("data/el_debate_full.csv")
+df_el_debate.to_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_debate_full.csv")
 
 el_debate.to_csv("data/el_debate.csv")

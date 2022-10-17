@@ -2,9 +2,14 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from datetime import date
 from datetime import datetime
 import re
+from datetime import datetime
+
+now = datetime.now()
+current_time = now.strftime("%d.%m.%Y %H:%M:%S")
 
 el_diario = pd.read_csv("data/el_diario.csv")
 el_diario.drop("Unnamed: 0",axis=1,inplace=True)
@@ -13,9 +18,11 @@ old_links = el_diario.url.to_list()
 
 new_links = pd.DataFrame(columns=["seccion","titulo","url","cmp","idx","dominio","crawl_day"])
 
+path = "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/chromedriver"
+s = Service(path)
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
-driver = webdriver.Chrome(chrome_options=options)
+driver = webdriver.Chrome(service=s,options=options)
 
 url = "https://www.eldiario.es/"
 driver.get(url)
@@ -56,7 +63,7 @@ for col,row in new_links.iterrows():
 el_diario = pd.concat([el_diario,new_links],axis=0)
 el_diario.reset_index(inplace=True,drop=True)
 
-print("{0} new links will be parsed".format(len(new_links)))
+print("{0} - {1} new links will be parsed".format(current_time, len(new_links)))
 
 df_full = pd.DataFrame(columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text","crawl_day"])
 
@@ -108,20 +115,23 @@ for col,row in new_links.iterrows():
             text = text.replace("\n"," ")
             text = re.sub(' +', ' ', text)
             
-            l.append([row["url"],row["seccion"],row["cmp"],row["idx"], date, title, sub, sub_2, author, text,date.today()])
+            try:
+                l.append([row["url"],row["seccion"],row["cmp"],row["idx"], date, title, sub, sub_2, author, text,date.today()])
+            except NameError:
+                continue
             df_ = pd.DataFrame(l,columns=["url","seccion","cmp","idx","date","title","sub","sub_2","authors","text","crawl_day"])
             df_full = pd.concat([df_full,df_], axis=0)
     else:
         pass    
 
-df_el_diario = pd.read_csv("data/el_diario_full.csv")
+df_el_diario = pd.read_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_diario_full.csv")
 df_el_diario.drop("Unnamed: 0",axis=1,inplace=True)
 df_el_diario.reset_index(inplace=True,drop=True)
 df_el_diario.to_csv("data/bups/el_diario_full_bup.csv")
 
 df_el_diario = pd.concat([df_el_diario,df_full],axis=0)
 df_el_diario.reset_index(inplace=True,drop=True)
-df_el_diario.to_csv("data/el_diario_full.csv")
+df_el_diario.to_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_diario_full.csv")
 
 # ACTUALIZANDO OLD LINKS
 el_diario.to_csv("data/el_diario.csv")

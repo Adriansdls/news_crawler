@@ -2,10 +2,15 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from datetime import date
 from datetime import datetime
 import re
 from pandas.errors import ParserError
+from datetime import datetime
+
+now = datetime.now()
+current_time = now.strftime("%d.%m.%Y %H:%M:%S")
 
 cadena_ser = pd.read_csv("data/cadena_ser.csv")
 cadena_ser.drop("Unnamed: 0",axis=1,inplace=True)
@@ -14,9 +19,12 @@ old_links = cadena_ser.url.to_list()
 
 new_links = pd.DataFrame(columns=["pos","url","crawl_day"])
 
+path = "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/chromedriver"
+s = Service(path)
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
-driver = webdriver.Chrome(chrome_options=options)
+driver = webdriver.Chrome(service=s,options=options)
+#driver = webdriver.Chrome(executable_path="/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/chromedriver" ,chrome_options=options)
 
 url = "https://www.cadenaser.com/"
 driver.get(url)
@@ -51,7 +59,7 @@ cadena_ser = pd.concat([cadena_ser,new_links],axis=0)
 cadena_ser.drop_duplicates(inplace=True)
 cadena_ser.reset_index(inplace=True,drop=True)
 
-print("{0} new links will be parsed".format(len(new_links)))
+print("{0} - {1} new links will be parsed".format(current_time, len(new_links)))
 
 df_full = pd.DataFrame(columns=["fecha","programa","seccion","tags","tags_2","loc","titulo","titulo_2","subtiulo","texto","url","pos","crawl_day"])
 
@@ -101,14 +109,14 @@ for col,row in new_links.iterrows():
 
 df_full.url.drop_duplicates(inplace=True)
 
-df_cadena_ser = pd.read_csv("data/cadena_ser_full.csv")
+df_cadena_ser = pd.read_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/cadena_ser_full.csv")
 df_cadena_ser.drop("Unnamed: 0",axis=1,inplace=True)
 df_cadena_ser.reset_index(inplace=True,drop=True)
 df_cadena_ser.to_csv("data/cadena_ser_full_bup.csv")
 
 df_cadena_ser = pd.concat([df_cadena_ser,df_full],axis=0)
 df_cadena_ser.reset_index(inplace=True,drop=True)
-df_cadena_ser.to_csv("data/cadena_ser_full.csv")
+df_cadena_ser.to_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/cadena_ser_full.csv")
 
 # ACTUALIZANDO OLD LINKS
 cadena_ser.to_csv("data/cadena_ser.csv")
