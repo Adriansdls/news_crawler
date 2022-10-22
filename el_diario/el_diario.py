@@ -81,6 +81,8 @@ for col,row in new_links.iterrows():
                 date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
             except ValueError:
                 date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+01:00').date()
+            except TypeError:
+                continue
 
             title = soup.find("h1",{"class": "title"})
             title = title.text.replace("\n"," ")

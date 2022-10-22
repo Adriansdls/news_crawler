@@ -1,0 +1,120 @@
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:15: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_["newspaper"] = "cadena ser"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:18: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  debate_["newspaper"] = "el debate"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  diario_["newspaper"] = "el diario"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:23: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_.rename(columns={"fecha":"date","titulo":"title","texto":"text"}, inplace=True)
+18.10.2022 11:00:01 - 99 new links were added
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:15: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_["newspaper"] = "cadena ser"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:18: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  debate_["newspaper"] = "el debate"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  diario_["newspaper"] = "el diario"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:23: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_.rename(columns={"fecha":"date","titulo":"title","texto":"text"}, inplace=True)
+19.10.2022 11:00:02 - 0 new links were added
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:15: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_["newspaper"] = "cadena ser"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:18: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  debate_["newspaper"] = "el debate"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  diario_["newspaper"] = "el diario"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:23: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_.rename(columns={"fecha":"date","titulo":"title","texto":"text"}, inplace=True)
+20.10.2022 11:00:01 - 0 new links were added
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:15: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_["newspaper"] = "cadena ser"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:18: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  debate_["newspaper"] = "el debate"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  diario_["newspaper"] = "el diario"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:23: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_.rename(columns={"fecha":"date","titulo":"title","texto":"text"}, inplace=True)
+21.10.2022 11:00:01 - 0 new links were added
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:15: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_["newspaper"] = "cadena ser"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:18: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  debate_["newspaper"] = "el debate"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:21: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame.
+Try using .loc[row_indexer,col_indexer] = value instead
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  diario_["newspaper"] = "el diario"
+/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/todos.py:23: SettingWithCopyWarning: 
+A value is trying to be set on a copy of a slice from a DataFrame
+
+See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
+  ser_.rename(columns={"fecha":"date","titulo":"title","texto":"text"}, inplace=True)
+22.10.2022 11:00:01 - 0 new links were added

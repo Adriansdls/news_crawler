@@ -2,3 +2,36 @@
 17.10.2022 12:00:02 - 6 new links will be parsed
 17.10.2022 15:00:02 - 19 new links will be parsed
 17.10.2022 18:00:01 - 6 new links will be parsed
+17.10.2022 21:00:02 - 4 new links will be parsed
+18.10.2022 09:00:02 - 33 new links will be parsed
+18.10.2022 12:00:01 - 12 new links will be parsed
+18.10.2022 15:00:01 - 9 new links will be parsed
+18.10.2022 18:00:01 - 7 new links will be parsed
+18.10.2022 21:00:01 - 17 new links will be parsed
+19.10.2022 00:00:02 - 1 new links will be parsed
+19.10.2022 09:00:01 - 30 new links will be parsed
+19.10.2022 12:00:02 - 12 new links will be parsed
+19.10.2022 15:00:02 - 9 new links will be parsed
+19.10.2022 18:00:01 - 7 new links will be parsed
+19.10.2022 21:00:02 - 8 new links will be parsed
+20.10.2022 00:00:02 - 4 new links will be parsed
+20.10.2022 12:00:01 - 35 new links will be parsed
+20.10.2022 15:00:02 - 16 new links will be parsed
+20.10.2022 18:00:01 - 8 new links will be parsed
+20.10.2022 21:00:02 - 6 new links will be parsed
+21.10.2022 00:00:02 - 5 new links will be parsed
+21.10.2022 12:00:02 - 41 new links will be parsed
+Traceback (most recent call last):
+  File "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/el_diario/el_diario.py", line 81, in <module>
+    date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
+TypeError: 'NoneType' object is not subscriptable
+21.10.2022 21:00:02 - 55 new links will be parsed
+Traceback (most recent call last):
+  File "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/el_diario/el_diario.py", line 81, in <module>
+    date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
+TypeError: 'NoneType' object is not subscriptable
+22.10.2022 12:00:02 - 53 new links will be parsed
+Traceback (most recent call last):
+  File "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/el_diario/el_diario.py", line 81, in <module>
+    date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
+TypeError: 'NoneType' object is not subscriptable
