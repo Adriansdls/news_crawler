@@ -7,12 +7,22 @@ from datetime import date
 from datetime import datetime
 import re
 from datetime import datetime
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+
+scope = ['https://www.googleapis.com/auth/spreadsheets',
+         "https://www.googleapis.com/auth/drive"]
+
+credentials = ServiceAccountCredentials.from_json_keyfile_name("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/newspapers-366612-be359318d4f2.json", scope)
+client = gspread.authorize(credentials)
 
 now = datetime.now()
 current_time = now.strftime("%d.%m.%Y %H:%M:%S")
 
-el_diario = pd.read_csv("data/el_diario.csv")
-el_diario.drop("Unnamed: 0",axis=1,inplace=True)
+el_diario_sheet = client.open("el_diario").sheet1
+el_diario = pd.DataFrame(el_diario_sheet.get_all_records())
+el_diario_bup_sheet = client.open("el_diario_links_bup").sheet1
+el_diario_bup_sheet.update([el_diario.columns.values.tolist()] + el_diario.values.tolist())
 el_diario.to_csv("data/bups/el_diario_links_bup.csv")
 old_links = el_diario.url.to_list()
 
@@ -126,14 +136,30 @@ for col,row in new_links.iterrows():
     else:
         pass    
 
-df_el_diario = pd.read_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_diario_full.csv")
-df_el_diario.drop("Unnamed: 0",axis=1,inplace=True)
+df_full["newspaper"] = "el diario"
+df_full_ = df_full[["newspaper","url","title","text"]]
+today_news_sheet = client.open("today_news").sheet1
+today_news_sheet.update([df_full_.columns.values.tolist()] + df_full_.values.tolist())
+
+df_el_diario_sheet = client.open("el_diario_full").sheet1
+df_el_diario = pd.DataFrame(df_el_diario_sheet.get_all_records())
+#df_el_diario = pd.read_csv("data/el_diario_full.csv")
+#df_el_diario.drop("Unnamed: 0",axis=1,inplace=True)
 df_el_diario.reset_index(inplace=True,drop=True)
+
+# ACTUALIZANDO Y EXPORTANDO BACK UP
+df_el_diario_bup_sheet = client.open("el_diario_full_bup").sheet1
+df_el_diario_bup_sheet.update([df_el_diario.columns.values.tolist()] + df_el_diario.values.tolist())
 df_el_diario.to_csv("data/bups/el_diario_full_bup.csv")
 
+# SUMANDO NUEVOS REGISTROS AL TOTAL
 df_el_diario = pd.concat([df_el_diario,df_full],axis=0)
-df_el_diario.reset_index(inplace=True,drop=True)
-df_el_diario.to_csv("/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/csvs/el_diario_full.csv")
+df_el_diario.reset_index(inplace=True, drop=True)
 
-# ACTUALIZANDO OLD LINKS
+# EXPORTANDO A DRIVE Y LOCAL
+df_el_diario_sheet.update([df_el_diario.columns.values.tolist()] + df_el_diario.values.tolist())
+df_el_diario.to_csv("data/el_diario_full.csv")
+
+# ACTUALIZANDO Y EXPORTANDO OLD LINKS
 el_diario.to_csv("data/el_diario.csv")
+el_diario_sheet.update([el_diario.columns.values.tolist()] + el_diario.values.tolist())

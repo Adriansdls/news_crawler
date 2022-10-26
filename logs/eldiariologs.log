@@ -35,3 +35,19 @@ Traceback (most recent call last):
   File "/Users/adriansanchezdelasierra/projects/news_parser/new_crawler/el_diario/el_diario.py", line 81, in <module>
     date = datetime.strptime(d["datetime"], '%Y-%m-%dT%H:%M:%S+02:00').date()
 TypeError: 'NoneType' object is not subscriptable
+22.10.2022 15:00:01 - 1 new links will be parsed
+22.10.2022 18:00:01 - 9 new links will be parsed
+22.10.2022 21:00:01 - 7 new links will be parsed
+23.10.2022 00:00:01 - 1 new links will be parsed
+23.10.2022 12:00:02 - 37 new links will be parsed
+24.10.2022 09:00:01 - 36 new links will be parsed
+24.10.2022 15:00:03 - 17 new links will be parsed
+24.10.2022 18:00:02 - 14 new links will be parsed
+24.10.2022 21:00:02 - 12 new links will be parsed
+25.10.2022 09:00:02 - 33 new links will be parsed
+25.10.2022 15:00:01 - 21 new links will be parsed
+25.10.2022 18:00:02 - 13 new links will be parsed
+25.10.2022 21:00:02 - 12 new links will be parsed
+26.10.2022 09:00:02 - 37 new links will be parsed
+26.10.2022 12:00:02 - 9 new links will be parsed
+26.10.2022 15:00:02 - 13 new links will be parsed
